@@ -2,9 +2,11 @@ package org.openstack4j.connectors.jersey2;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.ProcessingException;
+import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
 import org.openstack4j.api.exceptions.ConnectionException;
+import org.openstack4j.api.exceptions.AuthenticationException;
 import org.openstack4j.api.exceptions.ResponseException;
 import org.openstack4j.core.transport.ClientConstants;
 import org.openstack4j.core.transport.HttpExecutorService;
@@ -36,7 +38,11 @@ public class HttpExecutorServiceImpl implements HttpExecutorService {
             throw re;
         }
         catch (Exception e) {
-            throw new ConnectionException("Error during execution: " + e, 0, e);
+        	if(e instanceof NullPointerException){
+        		throw new AuthenticationException("Error during execution: " + e, 0, e);
+        	}else{
+        		throw new ConnectionException("Error during execution: " + e, 0, e);
+        	}
         }
     }
 
@@ -56,10 +62,11 @@ public class HttpExecutorServiceImpl implements HttpExecutorService {
             return invokeRequest(command);
         } catch (ProcessingException pe) {
             throw new ConnectionException(pe.getMessage(), 0, pe);
-        } catch (ClientErrorException e) {
-            throw ResponseException.mapException(e.getResponse().getStatusInfo().toString(), e.getResponse().getStatus(), e);
-        }
-    }
+		} catch (ClientErrorException | ServerErrorException e) {
+			throw ResponseException.mapException(e.getResponse().getStatusInfo().toString(),
+					e.getResponse().getStatus(), e);
+		}
+	}
 
     private <R> HttpResponse invokeRequest(HttpCommand<R> command) throws Exception {
         Response response = command.execute();
