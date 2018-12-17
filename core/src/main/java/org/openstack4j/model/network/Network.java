@@ -36,7 +36,7 @@ public interface Network extends Resource, Buildable<NetworkBuilder> {
 	/**
 	 * @return the network type
 	 */
-	NetworkType getNetworkType();
+	String getNetworkType();
 
 	/**
 	 * @return true if the router is external

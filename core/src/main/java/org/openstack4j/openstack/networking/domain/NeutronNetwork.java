@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.openstack4j.api.Apis;
 import org.openstack4j.model.network.Network;
-import org.openstack4j.model.network.NetworkType;
 import org.openstack4j.model.network.State;
 import org.openstack4j.model.network.Subnet;
 import org.openstack4j.model.network.builder.NetworkBuilder;
@@ -40,7 +39,7 @@ public class NeutronNetwork implements Network {
     @JsonProperty("tenant_id")
     private String tenantId;
     @JsonProperty("provider:network_type")
-    private NetworkType networkType;
+    private String networkType;
     @JsonProperty("router:external")
     private Boolean routerExternal;
     private String id;
@@ -163,7 +162,7 @@ public class NeutronNetwork implements Network {
      * {@inheritDoc}
      */
     @Override
-    public NetworkType getNetworkType() {
+    public String getNetworkType() {
         return networkType;
     }
 
@@ -315,7 +314,7 @@ public class NeutronNetwork implements Network {
         }
 
         @Override
-        public NetworkBuilder networkType(NetworkType networkType) {
+        public NetworkBuilder networkType(String networkType) {
             m.networkType = networkType;
             return this;
         }

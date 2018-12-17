@@ -11,12 +11,11 @@ import java.util.Map;
 
 import org.openstack4j.api.AbstractTest;
 import org.openstack4j.api.Builders;
+import org.openstack4j.model.common.ActionResponse;
 import org.openstack4j.model.network.Agent;
 import org.openstack4j.model.network.Agent.Type;
 import org.openstack4j.model.network.Network;
-import org.openstack4j.model.network.NetworkType;
 import org.openstack4j.model.network.State;
-import org.openstack4j.model.common.ActionResponse;
 import org.testng.annotations.Test;
 
 import okhttp3.mockwebserver.RecordedRequest;
@@ -122,6 +121,6 @@ public class NetworkTests extends AbstractTest {
 		assertEquals(networks.get(0).getName(), name);
 		assertEquals(networks.get(0).getSubnets().get(0), "0c4faf33-8c23-4dc9-8bf5-30dd1ab452f9" );
 		assertEquals(networks.get(0).getId(), "73f6f1ac-5e58-4801-88c3-7e12c6ddfb39");
-		assertEquals(networks.get(0).getNetworkType(),  NetworkType.VXLAN);
+		assertEquals(networks.get(0).getNetworkType(),  "vxlan");
 	}
 }

@@ -2,7 +2,6 @@ package org.openstack4j.model.network.builder;
 
 import org.openstack4j.common.Buildable.Builder;
 import org.openstack4j.model.network.Network;
-import org.openstack4j.model.network.NetworkType;
 
 /**
  * A Builder which creates a Network
@@ -24,7 +23,7 @@ public interface NetworkBuilder extends Builder<NetworkBuilder, Network> {
 	/**
 	 * @see Network#getNetworkType()
 	 */	
-	NetworkBuilder networkType(NetworkType networkType);
+	NetworkBuilder networkType(String networkType);
 	
 	/**
 	 * @see Network#getProviderPhyNet()
