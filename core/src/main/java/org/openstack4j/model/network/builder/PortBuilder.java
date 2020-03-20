@@ -68,6 +68,12 @@ public interface PortBuilder extends Builder<PortBuilder, Port> {
    */
 	PortBuilder removeFixedIp(String address, String subnetId);
 	
+	/**
+	   * Set fixed IP to a empty set
+	   * @return PortBuilder
+	   * 
+	   */
+	PortBuilder setNoFixedIp();
 	
 	/**
 	 * Adds an allowed address pair to the current list of allowed addresses

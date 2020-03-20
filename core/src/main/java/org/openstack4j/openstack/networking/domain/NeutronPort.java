@@ -419,6 +419,17 @@ public class NeutronPort implements Port {
 
 			return this;
 		}
+		
+		@Override
+		public PortBuilder setNoFixedIp() {
+			if (m.fixedIps == null) {
+				m.fixedIps = Sets.newHashSet();
+			} else {
+				m.fixedIps.clear();
+			}
+
+			return this;
+		}
 
 		@Override
 		public PortBuilder allowedAddressPair(String ipAddress, String macAddress) {
