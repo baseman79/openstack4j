@@ -10,11 +10,13 @@ import org.openstack4j.api.networking.RouterService;
 import org.openstack4j.api.networking.SecurityGroupRuleService;
 import org.openstack4j.api.networking.SecurityGroupService;
 import org.openstack4j.api.networking.SubnetService;
+import org.openstack4j.api.networking.TrunkService;
 import org.openstack4j.api.networking.ext.AgentService;
 import org.openstack4j.api.networking.ext.FirewallAsService;
 import org.openstack4j.api.networking.ext.LbaasV2Service;
 import org.openstack4j.api.networking.ext.LoadBalancerService;
 import org.openstack4j.api.networking.ext.NetQuotaService;
+import org.openstack4j.api.networking.ext.NetworkIPAvailabilityService;
 
 /**
  * OpenStack Networking Operations API
@@ -125,6 +127,22 @@ public class NetworkingServiceImpl implements NetworkingService {
     @Override
     public AvailabilityZoneService availabilityzone() {
         return Apis.get(AvailabilityZoneService.class);
-    }	
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NetworkIPAvailabilityService networkIPAvailability() {
+        return Apis.get(NetworkIPAvailabilityService.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrunkService trunk() {
+        return Apis.get(TrunkService.class);
+    }
 
 }

@@ -1,24 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
-    </parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.pacesys</groupId>
+    <groupId>com.github.openstack4j.core</groupId>
     <artifactId>openstack4j-parent</artifactId>
-    <version>3.1.1-SNAPSHOT</version>
+    <version>3.6</version>
     <name>OpenStack4j Parent</name>
     <description>OpenStack Java API</description>
-    <url>http://github.com/ContainX/openstack4j/</url>
+    <url>http://github.com/openstack4j/openstack4j/</url>
     <packaging>pom</packaging>
     <properties>
         <release.version>2.0.0</release.version>
         <aries.spifly.version>1.0.0</aries.spifly.version>
         <slf4j.version>1.7.21</slf4j.version>
-        <jackson.version>2.7.3</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
         <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
+        <maven.source.plugin.version>2.4</maven.source.plugin.version>
+        <maven.javadoc.plugin.version>2.10.4</maven.javadoc.plugin.version>
+
         <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
     <licenses>
@@ -35,10 +32,10 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com:ContainX/openstack4j.git</connection>
-        <developerConnection>scm:git:git@github.com:ContainX/openstack4j.git</developerConnection>
-        <url>http://github.com/ContainX/openstack4j/</url>
-        <tag>HEAD</tag>
+        <connection>scm:git:git@github.com:openstack4j/openstack4j.git</connection>
+        <developerConnection>scm:git:git@github.com:openstack4j/openstack4j.git</developerConnection>
+        <url>http://github.com/openstack4j/openstack4j/</url>
+        <tag>openstack4j-parent-3.6</tag>
     </scm>
     <mailingLists>
         <mailingList>
@@ -97,8 +94,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
@@ -168,7 +165,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>${maven.source.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -186,9 +183,9 @@
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>true</useReleaseProfile>
-                    <pushChanges>false</pushChanges>
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
+                    <arguments>-DskipTests</arguments>
                 </configuration>
             </plugin>
             <plugin>
@@ -239,7 +236,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore></ignore>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
@@ -255,7 +252,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>${maven.javadoc.plugin.version}</version>
                 <configuration>
                     <author>true</author>
                     <protected>true</protected>
@@ -284,20 +281,38 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <profiles>
         <profile>
             <id>release</id>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <version>2.8.2</version>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.4</version>
+                        <version>1.5</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts-for-release</id>
@@ -311,7 +326,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.4</version>
+                        <version>${maven.source.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources-for-release</id>
@@ -325,7 +340,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>${maven.javadoc.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -339,5 +354,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>

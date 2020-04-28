@@ -252,4 +252,18 @@ public interface NetworkBuilders {
      * @return HealthMonitorV2UpdateBuilder
      */
     public HealthMonitorV2UpdateBuilder healthMonitorV2Update();
+
+    /**
+     * The builder to create a network IP availability entity
+     *
+     * @return the NetworkIPAvailability builder
+     */
+    public NetworkIPAvailabilityBuilder networkIPAvailability();
+
+	/**
+     * The builder to create a Trunk
+     *
+     * @return TrunkBuilder
+     */
+    public TrunkBuilder trunk();
 }

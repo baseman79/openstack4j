@@ -7,6 +7,7 @@ import org.openstack4j.common.RestService;
 import org.openstack4j.model.common.ActionResponse;
 import org.openstack4j.model.storage.block.Volume;
 import org.openstack4j.model.storage.block.VolumeType;
+import org.openstack4j.model.storage.block.VolumeTypeEncryption;
 import org.openstack4j.model.storage.block.VolumeUploadImage;
 import org.openstack4j.model.storage.block.options.UploadImageData;
 
@@ -41,6 +42,36 @@ public interface BlockVolumeService extends RestService {
      */
     VolumeType createVolumeType(VolumeType volumeType);
 
+    /**
+     * Creates a new encryption with the specified instance for the specified volume type
+     *
+     * @param volumeTypeId
+     *            the volume type identifier
+     * @param volumeTypeEncryption
+     *            the encryption to create
+     * @return the created volume type encryption
+     */
+    VolumeTypeEncryption createVolumeTypeEncryption(String volumeTypeId, VolumeTypeEncryption volumeTypeEncryption);
+
+    /**
+     * Retrieves the encryption for the specified volume type
+     *
+     * @param volumeTypeId
+     *            the volume type identifier
+     * @return the encryption
+     */
+    VolumeTypeEncryption getVolumeTypeEncryption(String volumeTypeId);
+
+    /**
+     * Deletes the specified volume type encryption for the specified volume type
+     *
+     * @param volumeTypeId
+     *            the volume type identifier
+     * @param encryptionId
+     *            the encryption identifier
+     */
+    void deleteVolumeTypeEncryption(String volumeTypeId, String encryptionId);
+
 	/**
 	 * Lists summary information for all Block Storage volumes that the tenant who submits the request can access.
 	 * 
@@ -55,6 +86,13 @@ public interface BlockVolumeService extends RestService {
 	 * @return 
 	*/
 	List<? extends Volume> list(Map<String, String> filteringParams);
+
+	/**
+	 * Lists all Block Storage volumes for all tenants.
+	 *
+	 * @return List of all Volumes
+	 */
+	List<? extends Volume> listAll();
 
 	/**
 	 * Gets a Block Storage volume by ID

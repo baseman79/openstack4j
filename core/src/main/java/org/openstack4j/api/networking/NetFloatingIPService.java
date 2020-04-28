@@ -7,7 +7,6 @@ import org.openstack4j.common.RestService;
 import org.openstack4j.model.common.ActionResponse;
 import org.openstack4j.model.network.NetFloatingIP;
 
-
 /**
  * Provides Neutron-based FloatingIP services.
  *
@@ -18,7 +17,7 @@ public interface NetFloatingIPService extends RestService {
   /**
    * Returns list of floating IPs.
    *
-   * @return List of NetFloatingIPs or empty
+   * @return List of NetFloatingIPs.
    */
   List<? extends NetFloatingIP> list();
   
@@ -26,28 +25,25 @@ public interface NetFloatingIPService extends RestService {
    * Returns list of floating IPs filtered by parameters.
    * 
    * @param filteringParams map (name, value) of filtering parameters
-   * @return 
    */
   List<? extends NetFloatingIP> list(Map<String, String> filteringParams);
   
   /**
    * Gets a NetFloatingIP by id.
    *
-   * @param id the floating-ip identifier
+   * @param fipId the floating-ip identifier.
    * @return the NetFloatingIP
    */
-  NetFloatingIP get(String id);
-  
-  
+  NetFloatingIP get(String fipId);
+
   /**
    * Deletes NetFloatingIP by id.
    *
-   * @param id the id
+   * @param fipId the floating-ip identifier.
    * @return the action response
    */
-  ActionResponse delete(String id);
-  
-  
+  ActionResponse delete(String fipId);
+
   /**
    * Creates a new Floating IP
    *
@@ -55,23 +51,21 @@ public interface NetFloatingIPService extends RestService {
    * @return the net floating ip
    */
   NetFloatingIP create(NetFloatingIP floatingIp);
-  
-  
+
   /**
    * Associates a Floating IP to a Port.
    *
-   * @param floatingIp the floating ip
+   * @param fipId the floating-ip identifier.
+   * @param portId Id of the port to associate to.
    * @return the net floating ip
    */
-  NetFloatingIP associateToPort(String id, String portId);
-  
-  
+  NetFloatingIP associateToPort(String fipId, String portId);
+
   /**
-   * Deassociate's from port.
+   * Disassociate from port.
    *
-   * @param floatingIp the floating ip
+   * @param fipId the floating-ip identifier.
    * @return the net floating ip
    */
-  NetFloatingIP disassociateFromPort(String id);
-  
+  NetFloatingIP disassociateFromPort(String fipId);
 }
